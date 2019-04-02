@@ -16,3 +16,7 @@ Source: [issue on GitHub](https://github.com/technomancy/leiningen/issues/2277)
 (cemerick.pomegranate.aether/register-wagon-factory!
  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 ```
+
+# Generally speaking
+
+Run a `lein clean` before starting to debug a suspected module.

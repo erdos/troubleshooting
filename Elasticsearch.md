@@ -26,3 +26,27 @@ It is likely that disk is full. Free some space and run:
 curl -XPUT localhost:9300/_settings --data '{"index": {"blocks": {"read_only_allow_delete": "false"}}}' --header 'content-type: application/json'
 ```
 
+# Status 409 Conflict
+
+After an insert the following is returned:
+```
+{
+   "error": {
+      "root_cause": [
+         {
+            "type": "version_conflict_engine_exception",
+            "reason": "[...][1]: version conflict, current [2], provided [1]",
+            "index": "...",
+            "shard": "3"
+         }
+      ],
+      "type": "version_conflict_engine_exception",
+      "reason": "[...][1]: version conflict, current [2], provided [1]",
+      "index": "...",
+      "shard": "3"
+   },
+   "status": 409
+}
+```
+
+The problem is that the document has been already [modified in the background](https://www.elastic.co/guide/en/elasticsearch/guide/current/optimistic-concurrency-control.html). Check out the application code for concurrency issues and try to insert the document again (optimistic concurrency control).
